@@ -1,0 +1,13 @@
+void lcd_send_nibble( BYTE n );
+void lcd_send_byte( BYTE address, BYTE n );
+void lcd_init();
+void lcd_init1();
+void lcd_gotoxy( BYTE x, BYTE y);
+void lcd_putc( char c);
+void lcd_clr();
+void lcd_text_art1(BYTE col,BYTE row,char *st,unsigned int16 time_delay);
+void display_art_base2(char col,char row, char n,char ch);
+void lcd_text_art2(BYTE col,BYTE row,char *st,unsigned int16 time_delay);
+void lcd_display_int(unsigned int16 number);
+void lcd_display_time(int8 data);
+void set_cgram();

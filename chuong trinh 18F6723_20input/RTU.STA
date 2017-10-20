@@ -1,0 +1,824 @@
+
+ROM used:   115032/131072 (88%)
+            115040/131072 (88%) including unused fragments
+
+            7.9 Average locations per line
+            15.2 Average locations per statement
+
+RAM used:   2024/3936 (51%) at main() level
+            2137/3936 (54%) worst case
+
+Stack used: 12 worst case (5 in main + 7 for interrupts)
+Stack size: 31
+
+Lines Stmts  %   Files
+----- ----- ---  -----
+  242   158   2  RTU.c
+  234   138   2  RTU.h
+  913     0   0  C:\Program Files (x86)\PICC\Devices\18F6723.h
+ 2227   257   3  C:\Program Files (x86)\PICC\Drivers\math.h
+  235    73   1  lcd_4bit.c
+  435   129   2  C:\Program Files (x86)\PICC\Drivers\string.h
+   32     0   0  C:\Program Files (x86)\PICC\Drivers\stddef.h
+   28     0   0  C:\Program Files (x86)\PICC\Drivers\ctype.h
+   14     0   0  lcd_4bit.h
+  117    67   1  real_time_ds1307.c
+ 1081   803  11  config.c
+   42     1   0  write_sd.c
+  128     0   0  MMC_SPI_FAT32.h
+ 1526   719   9  MMC_SPI_FAT32.c
+  335   129   2  C:\Program Files (x86)\PICC\Drivers\STDLIBM.H
+   76    13   0  C:\Program Files (x86)\PICC\Drivers\memmgmt.c
+ 6980  5098  67  key_lcd.c
+----- -----
+14645  7585 Total
+
+Page ROM  %  RAM    Vol Diff  Functions:
+---- --- --- ---    --- ----  ----------
+0     40   0    1             @delay_ms1
+0     68   0    1     14  0.8  @PUTCHAR_1_
+0      8   0    0             @PUTCHARI_BIU_2
+0     32   0    1             @PUTCHAR_BIU_3
+0     24   0    0             @GETCH_BIU_3
+0    106   0    3             @I2C_READ_1
+0    118   0    1             @I2C_WRITE_1
+0    854   1   20   1121 10.1  CEIL_FLOOR
+0    122   0   10             @FLT
+0     60   0    4             @SFTOI
+0     54   0    2             @ITOF
+0    246   0   11             @MULFF
+0    632   1   16             @ADDFF
+0     28   0    4     43  2.1  floor
+0     30   0    4     44  1.9  ceil
+0    356   0   16    259  6.9  fmod
+0    350   0   14             @DIVFF
+0   1036   1   22   1071  8.0  exp
+0     80   0    2             @SITOF
+0    912   1   25    979 10.0  log
+0    778   1   12    556  7.5  pow
+0    286   0   18    510 10.6  sqrt
+0   1814   2   25   2854  7.2  conver_ieee574
+0     56   0    4             @DTOF
+0    456   0    0    245  1.8  show_debug
+0     28   0    0             @const1182
+0     48   0    4             @PSTRINGCN_700
+0     44   0    3             @DIV88
+0    196   0    6             @PRINTF_D_700
+0     16   0    0             @const1191
+0     66   0    5             @FTOSD
+0    148   0   13             @DIV3232
+0    432   0   13             @PRINTF_L32D_700FPFPF
+0     14   0    0             @const1200
+0     16   0    0             @const1201
+0     10   0    0             @const1202
+0     10   0    0             @const1203
+0   9142   9   17  13477  9.7  data_out
+0     34   0    5             @MUL1616
+0     92   0   14             @MUL3232
+0     40   0    0             @goto11376
+0     76   0    0             @const1342
+0     24   0    0             @const1345
+0    124   0    3    601  4.4  lcd_send_nibble
+0     68   0    3    249  4.3  lcd_send_byte
+0    224   0    2    414  4.1  lcd_init
+0      2   0    0             @const1352
+0     40   0    3    111  3.8  @PSTRINGC_1318
+0     38   0    4    186  5.5  lcd_gotoxy
+0     80   0    1    248  4.1  lcd_putc
+0     24   0    0     42  1.4  lcd_clr
+0     86   0    2    160  4.4  set_cgram
+0    512   1    2    429  2.4  ds1307_init
+0    216   0    8    503  2.7  ds1307_set_date_time
+ Inline         5    383  3.1  ds1307_get_date
+ Inline         4    315  3.0  ds1307_get_time
+0     48   0    3    240  6.0  bin2bcd
+0     42   0    3    155  4.7  bcd2bin
+0    120   0   10    593 10.2  crc16_modbus
+0    192   0    5   1565  7.6  send_metter
+0     40   0    0  36655  9.0  @goto12010
+1  16380  17    6  48595  9.0  rtu_init
+0     66   0    6    635  1.9  @WRITEBITA
+0    272   0    2    635  1.9  send_ip
+0    128   0    6    770  4.9  output_alarm
+0    250   0    4   2843  5.4  set_alarm_metter
+0     64   0    0    150  3.6  @goto12822
+0     56   0    5    150  3.6  @SPI_XFER_1
+0     16   0    1     35  1.4  MMCOut
+0     14   0    0     27  1.0  MMC8Clock
+0     16   0    0     32  1.1  MMCIn
+0    220   0    3   1026  6.7  MMCInit
+0     16   0    0    896  7.6  @const1721
+0     40   0    3    896  7.6  @PSTRINGC_700
+0    688   1    3    267  3.1  wite_data_sd
+0     82   0    0             @const1770
+0    198   0    6             @PRINTF_D_9600_31766_31767
+0     52   0    4             @PSTRINGCN_9600_31766_31767
+0    198   0    6             @PRINTF_D0_9600_31766_31767
+0    472   0   13    280  3.2  @PRINTF_L32D_9600_31766_31767FPFPF
+0    194   0    9    280  3.2  @PRINTF_LU_9600_31766_31767
+0     52   0    2    280  3.2  key
+0  31498  32    5 178948 11.5  scan_key
+0     50   0    5             @READBITA
+0     40   0    0             @goto15299
+0     40   0    0             @goto15315
+0     40   0    0             @goto15331
+0     40   0    0             @goto15347
+0     40   0    0             @goto15363
+0     40   0    0             @goto15379
+0     40   0    0    280  3.2  @goto15395
+0     40   0    0 178948 11.5  @goto15411
+0     40   0    0 178702 11.5  @goto15427
+0     40   0    0    280  3.2  @goto15443
+0     40   0    0 178948 11.5  @goto15459
+0     40   0    0             @goto15475
+0     40   0    0             @goto15491
+0     40   0    0             @goto15507
+0     40   0    0             @goto15523
+0     40   0    0             @goto15539
+0     40   0    0             @goto15555
+0     40   0    0             @goto15571
+0     40   0    0             @goto15587
+0     40   0    0             @goto15603
+0     40   0    0             @goto15619
+0     40   0    0             @goto15635
+0     40   0    0             @goto15651
+0     40   0    0             @goto15667
+0     40   0    0             @goto15683
+0     40   0    0 122060  7.0  @goto15699
+0     40   0    0 122060  7.0  @goto16014
+1  27318  28    2 122060  7.0  show_lcd
+0     12   0    0             @const1818
+0     26   0    0             @const1819
+0    196   0    6             @PRINTF_D0_1318
+0     48   0    4             @PSTRINGCN_1318
+0    196   0    6             @PRINTF_D_1318
+0     14   0    0             @const1828
+0     10   0    0             @const1829
+0     14   0    0             @const1830
+0     10   0    0 122060  7.0  @const1831
+0     14   0    0 122060  7.0  @const1832
+0     10   0    0             @const1833
+0     14   0    0 122060  7.0  @const1834
+0     10   0    0             @const1835
+0     14   0    0             @const1836
+0     10   0    0             @const1837
+0     14   0    0             @const1838
+0     10   0    0             @const1839
+0     14   0    0             @const1840
+0     10   0    0             @const1841
+0     14   0    0             @const1842
+0     10   0    0             @const1843
+0     14   0    0             @const1844
+0     10   0    0             @const1845
+0     14   0    0             @const1846
+0     10   0    0             @const1847
+0     14   0    0             @const1848
+0     10   0    0             @const1849
+0     14   0    0             @const1850
+0     10   0    0             @const1851
+0     14   0    0             @const1852
+0     10   0    0             @const1853
+0     14   0    0             @const1854
+0     10   0    0             @const1855
+0     14   0    0             @const1856
+0     10   0    0             @const1857
+0     14   0    0             @const1858
+0     10   0    0             @const1859
+0     14   0    0             @const1860
+0     10   0    0             @const1861
+0     14   0    0             @const1862
+0     10   0    0             @const1863
+0     14   0    0             @const1864
+0     10   0    0             @const1865
+0     14   0    0             @const1866
+0     10   0    0             @const1867
+0     14   0    0             @const1868
+0     10   0    0             @const1869
+0     14   0    0             @const1870
+0     10   0    0             @const1871
+0     14   0    0             @const1872
+0     10   0    0             @const1873
+0     14   0    0             @const1874
+0     10   0    0             @const1875
+0     14   0    0             @const1876
+0     10   0    0             @const1877
+0     14   0    0             @const1878
+0     10   0    0             @const1879
+0     14   0    0             @const1880
+0     14   0    0             @const1881
+0     14   0    0             @const1882
+0     16   0    0             @const1883
+0     16   0    0             @const1884
+0     16   0    0             @const1885
+0     16   0    0             @const1886
+0     14   0    0             @const1887
+0     16   0    0             @const1888
+0     14   0    0             @const1889
+0     16   0    0             @const1890
+0      8   0    0             @const1891
+0     16   0    0             @const1892
+0     16   0    0             @const1893
+0     16   0    0             @const1894
+0     14   0    0             @const1895
+0     16   0    0             @const1896
+0     14   0    0             @const1897
+0     16   0    0             @const1898
+0      8   0    0             @const1899
+0     16   0    0             @const1900
+0     16   0    0             @const1901
+0     16   0    0             @const1902
+0     14   0    0             @const1903
+0     16   0    0             @const1904
+0     14   0    0             @const1905
+0     16   0    0             @const1906
+0      8   0    0             @const1907
+0     16   0    0             @const1908
+0     16   0    0             @const1909
+0     16   0    0             @const1910
+0     14   0    0             @const1911
+0     16   0    0             @const1912
+0     14   0    0             @const1913
+0     16   0    0             @const1914
+0      8   0    0             @const1915
+0     16   0    0             @const1916
+0     16   0    0             @const1917
+0     16   0    0             @const1918
+0     14   0    0             @const1919
+0     16   0    0             @const1920
+0     14   0    0             @const1921
+0     16   0    0             @const1922
+0      8   0    0             @const1923
+0     16   0    0             @const1924
+0     16   0    0             @const1925
+0     16   0    0             @const1926
+0     14   0    0             @const1927
+0     16   0    0             @const1928
+0     14   0    0             @const1929
+0     16   0    0             @const1930
+0      8   0    0             @const1931
+0     16   0    0             @const1932
+0     16   0    0             @const1933
+0     16   0    0             @const1934
+0     14   0    0             @const1935
+0     16   0    0             @const1936
+0     14   0    0             @const1937
+0     16   0    0             @const1938
+0      8   0    0             @const1939
+0     16   0    0             @const1940
+0     16   0    0             @const1941
+0     16   0    0             @const1942
+0     14   0    0             @const1943
+0     16   0    0             @const1944
+0     14   0    0             @const1945
+0     16   0    0             @const1946
+0      8   0    0             @const1947
+0     16   0    0             @const1948
+0     16   0    0             @const1949
+0     16   0    0             @const1950
+0     14   0    0             @const1951
+0     16   0    0             @const1952
+0     14   0    0             @const1953
+0     16   0    0             @const1954
+0      8   0    0             @const1955
+0     16   0    0             @const1956
+0     16   0    0             @const1957
+0     16   0    0             @const1958
+0     14   0    0             @const1959
+0     16   0    0             @const1960
+0     14   0    0             @const1961
+0     16   0    0             @const1962
+0      8   0    0             @const1963
+0     16   0    0             @const1964
+0     16   0    0             @const1965
+0     16   0    0             @const1966
+0     14   0    0             @const1967
+0     16   0    0             @const1968
+0     14   0    0             @const1969
+0     16   0    0             @const1970
+0      8   0    0             @const1971
+0     16   0    0             @const1972
+0     16   0    0             @const1973
+0     16   0    0             @const1974
+0     14   0    0             @const1975
+0     16   0    0             @const1976
+0     14   0    0             @const1977
+0     16   0    0             @const1978
+0      8   0    0             @const1979
+0     16   0    0             @const1980
+0     16   0    0             @const1981
+0     16   0    0             @const1982
+0     14   0    0             @const1983
+0     16   0    0             @const1984
+0     14   0    0             @const1985
+0     16   0    0             @const1986
+0      8   0    0             @const1987
+0     16   0    0             @const1988
+0     16   0    0             @const1989
+0     16   0    0             @const1990
+0     14   0    0             @const1991
+0     16   0    0             @const1992
+0     14   0    0             @const1993
+0     16   0    0             @const1994
+0      8   0    0             @const1995
+0     16   0    0             @const1996
+0     16   0    0             @const1997
+0     16   0    0             @const1998
+0     14   0    0             @const1999
+0     16   0    0             @const2000
+0     14   0    0             @const2001
+0     16   0    0             @const2002
+0      8   0    0             @const2003
+0     16   0    0             @const2004
+0     16   0    0             @const2005
+0     16   0    0             @const2006
+0     14   0    0             @const2007
+0     16   0    0             @const2008
+0     14   0    0             @const2009
+0     16   0    0             @const2010
+0      8   0    0             @const2011
+0     16   0    0             @const2012
+0     16   0    0             @const2013
+0     16   0    0             @const2014
+0     14   0    0             @const2015
+0     16   0    0             @const2016
+0     14   0    0             @const2017
+0     16   0    0             @const2018
+0      8   0    0             @const2019
+0     16   0    0             @const2020
+0     16   0    0             @const2021
+0     16   0    0             @const2022
+0     14   0    0             @const2023
+0     16   0    0             @const2024
+0     14   0    0             @const2025
+0     16   0    0             @const2026
+0      8   0    0             @const2027
+0     16   0    0             @const2028
+0     16   0    0             @const2029
+0     16   0    0             @const2030
+0     14   0    0             @const2031
+0     16   0    0             @const2032
+0     14   0    0             @const2033
+0     16   0    0             @const2034
+0      8   0    0             @const2035
+0     16   0    0             @const2036
+0     16   0    0             @const2037
+0     16   0    0             @const2038
+0     14   0    0             @const2039
+0     16   0    0             @const2040
+0     14   0    0             @const2041
+0     16   0    0             @const2042
+0      8   0    0             @const2043
+0     16   0    0             @const2044
+0     16   0    0             @const2045
+0     16   0    0             @const2046
+0     14   0    0             @const2047
+0     16   0    0             @const2048
+0     14   0    0             @const2049
+0     16   0    0             @const2050
+0      8   0    0             @const2051
+0     16   0    0             @const2052
+0     16   0    0             @const2053
+0     16   0    0             @const2054
+0     14   0    0             @const2055
+0     16   0    0             @const2056
+0     14   0    0             @const2057
+0     16   0    0             @const2058
+0      8   0    0             @const2059
+0     16   0    0             @const2060
+0     16   0    0             @const2061
+0     16   0    0             @const2062
+0     14   0    0             @const2063
+0     16   0    0             @const2064
+0     14   0    0             @const2065
+0     16   0    0             @const2066
+0      8   0    0             @const2067
+0     16   0    0             @const2068
+0     16   0    0             @const2069
+0     16   0    0             @const2070
+0     14   0    0             @const2071
+0     16   0    0             @const2072
+0     14   0    0             @const2073
+0     16   0    0             @const2074
+0      8   0    0             @const2075
+0     16   0    0             @const2076
+0     16   0    0             @const2077
+0     16   0    0             @const2078
+0     14   0    0             @const2079
+0     16   0    0             @const2080
+0     14   0    0             @const2081
+0     16   0    0             @const2082
+0      8   0    0             @const2083
+0     16   0    0             @const2084
+0     16   0    0             @const2085
+0     16   0    0             @const2086
+0     14   0    0             @const2087
+0     16   0    0             @const2088
+0     14   0    0             @const2089
+0     16   0    0             @const2090
+0      8   0    0             @const2091
+0     16   0    0             @const2092
+0     10   0    0             @const2093
+0     16   0    0             @const2094
+0     10   0    0             @const2095
+0     16   0    0             @const2096
+0     10   0    0             @const2097
+0      8   0    0             @const2098
+0     14   0    0             @const2099
+0     10   0    0             @const2100
+0      8   0    0             @const2101
+0     10   0    0             @const2102
+0     10   0    0             @const2103
+1     40   0    0             @goto17590
+0     16   0    0             @const2105
+0     12   0    0             @const2106
+0    198   0    9             @PRINTF_LU_1318
+0     16   0    0             @const2109
+0     14   0    0             @const2110
+0     16   0    0             @const2111
+0     10   0    0             @const2112
+0      8   0    0             @const2113
+0     14   0    0             @const2114
+0     10   0    0             @const2115
+0      8   0    0             @const2116
+0     10   0    0             @const2117
+0     10   0    0             @const2118
+1     40   0    0             @goto17676
+0     16   0    0             @const2120
+0     12   0    0             @const2121
+0     16   0    0             @const2122
+0     14   0    0             @const2123
+0     16   0    0             @const2124
+0     10   0    0             @const2125
+0      8   0    0             @const2126
+0     14   0    0             @const2127
+0     10   0    0             @const2128
+0      8   0    0             @const2129
+0     10   0    0             @const2130
+0     10   0    0             @const2131
+1     40   0    0             @goto17743
+0     16   0    0             @const2133
+0     12   0    0             @const2134
+0     16   0    0             @const2135
+0     14   0    0             @const2136
+0     16   0    0             @const2137
+0     10   0    0             @const2138
+0      8   0    0             @const2139
+0     14   0    0             @const2140
+0     10   0    0             @const2141
+0      8   0    0             @const2142
+0     10   0    0             @const2143
+0     10   0    0             @const2144
+1     40   0    0             @goto17810
+0     16   0    0             @const2146
+0     12   0    0             @const2147
+0     16   0    0             @const2148
+0     14   0    0             @const2149
+0     16   0    0             @const2150
+0     10   0    0             @const2151
+0      8   0    0             @const2152
+0     14   0    0             @const2153
+0     10   0    0             @const2154
+0      8   0    0             @const2155
+0     10   0    0             @const2156
+0     10   0    0             @const2157
+1     40   0    0             @goto17877
+0     16   0    0             @const2159
+0     12   0    0             @const2160
+0     16   0    0             @const2161
+0     14   0    0             @const2162
+0     16   0    0             @const2163
+0     10   0    0             @const2164
+0      8   0    0             @const2165
+0     14   0    0             @const2166
+0     10   0    0             @const2167
+0      8   0    0             @const2168
+0     10   0    0             @const2169
+0     10   0    0             @const2170
+1     40   0    0             @goto17944
+0     16   0    0             @const2172
+0     12   0    0             @const2173
+0     16   0    0             @const2174
+0     14   0    0             @const2175
+0     16   0    0             @const2176
+0     10   0    0             @const2177
+0      8   0    0             @const2178
+0     14   0    0             @const2179
+0     10   0    0             @const2180
+0      8   0    0             @const2181
+0     10   0    0             @const2182
+0     10   0    0             @const2183
+1     40   0    0             @goto18011
+0     16   0    0             @const2185
+0     12   0    0             @const2186
+0     16   0    0             @const2187
+0     14   0    0             @const2188
+0     16   0    0             @const2189
+0     10   0    0             @const2190
+0      8   0    0             @const2191
+0     14   0    0             @const2192
+0     10   0    0             @const2193
+0      8   0    0             @const2194
+0     10   0    0             @const2195
+0     10   0    0             @const2196
+1     40   0    0             @goto18078
+0     16   0    0             @const2198
+0     12   0    0             @const2199
+0     16   0    0             @const2200
+0     14   0    0             @const2201
+0     16   0    0             @const2202
+0     10   0    0             @const2203
+0      8   0    0             @const2204
+0     14   0    0             @const2205
+0     10   0    0             @const2206
+0      8   0    0             @const2207
+0     10   0    0             @const2208
+0     10   0    0             @const2209
+1     40   0    0             @goto18145
+0     16   0    0             @const2211
+0     12   0    0             @const2212
+0     16   0    0             @const2213
+0     14   0    0             @const2214
+0     16   0    0             @const2215
+0     10   0    0             @const2216
+0      8   0    0             @const2217
+0     14   0    0             @const2218
+0     10   0    0             @const2219
+0      8   0    0             @const2220
+0     10   0    0             @const2221
+0     10   0    0             @const2222
+1     40   0    0             @goto18212
+0     16   0    0             @const2224
+0     12   0    0             @const2225
+0     16   0    0             @const2226
+0     14   0    0             @const2227
+0     16   0    0             @const2228
+0     10   0    0             @const2229
+0      8   0    0             @const2230
+0     14   0    0             @const2231
+0     10   0    0             @const2232
+0      8   0    0             @const2233
+0     10   0    0             @const2234
+0     10   0    0             @const2235
+1     40   0    0             @goto18279
+0     16   0    0             @const2237
+0     12   0    0             @const2238
+0     16   0    0             @const2239
+0     14   0    0             @const2240
+0     16   0    0             @const2241
+0     10   0    0             @const2242
+0      8   0    0             @const2243
+0     14   0    0             @const2244
+0     10   0    0             @const2245
+0      8   0    0             @const2246
+0     10   0    0             @const2247
+0     10   0    0             @const2248
+1     40   0    0             @goto18346
+0     16   0    0             @const2250
+0     12   0    0             @const2251
+0     16   0    0             @const2252
+0     14   0    0             @const2253
+0     16   0    0             @const2254
+0     10   0    0             @const2255
+0      8   0    0             @const2256
+0     14   0    0             @const2257
+0     10   0    0             @const2258
+0      8   0    0             @const2259
+0     10   0    0             @const2260
+0     10   0    0             @const2261
+1     40   0    0             @goto18413
+0     16   0    0             @const2263
+0     12   0    0             @const2264
+0     16   0    0             @const2265
+0     14   0    0             @const2266
+0     16   0    0             @const2267
+0     10   0    0             @const2268
+0      8   0    0             @const2269
+0     14   0    0             @const2270
+0     10   0    0             @const2271
+0      8   0    0             @const2272
+0     10   0    0             @const2273
+0     10   0    0             @const2274
+1     40   0    0             @goto18480
+0     16   0    0             @const2276
+0     12   0    0             @const2277
+0     16   0    0             @const2278
+0     14   0    0             @const2279
+0     16   0    0             @const2280
+0     10   0    0             @const2281
+0      8   0    0             @const2282
+0     14   0    0             @const2283
+0     10   0    0             @const2284
+0      8   0    0             @const2285
+0     10   0    0             @const2286
+0     10   0    0             @const2287
+1     40   0    0             @goto18547
+0     16   0    0             @const2289
+0     12   0    0             @const2290
+0     16   0    0             @const2291
+0     14   0    0             @const2292
+0     16   0    0             @const2293
+0     10   0    0             @const2294
+0      8   0    0             @const2295
+0     14   0    0             @const2296
+0     10   0    0             @const2297
+0      8   0    0             @const2298
+0     10   0    0             @const2299
+0     10   0    0             @const2300
+1     40   0    0             @goto18614
+0     16   0    0             @const2302
+0     12   0    0             @const2303
+0     16   0    0             @const2304
+0     14   0    0             @const2305
+0     16   0    0             @const2306
+0     10   0    0             @const2307
+0      8   0    0             @const2308
+0     14   0    0             @const2309
+0     10   0    0             @const2310
+0      8   0    0             @const2311
+0     10   0    0             @const2312
+0     10   0    0             @const2313
+1     40   0    0             @goto18681
+0     16   0    0             @const2315
+0     12   0    0             @const2316
+0     16   0    0             @const2317
+0     14   0    0             @const2318
+0     16   0    0             @const2319
+0     10   0    0             @const2320
+0      8   0    0             @const2321
+0     14   0    0             @const2322
+0     10   0    0             @const2323
+0      8   0    0             @const2324
+0     10   0    0             @const2325
+0     10   0    0             @const2326
+1     40   0    0             @goto18748
+0     16   0    0             @const2328
+0     12   0    0             @const2329
+0     16   0    0             @const2330
+0     14   0    0             @const2331
+0     16   0    0             @const2332
+0     10   0    0             @const2333
+0      8   0    0             @const2334
+0     14   0    0             @const2335
+0     10   0    0             @const2336
+0      8   0    0             @const2337
+0     10   0    0             @const2338
+0     10   0    0             @const2339
+1     40   0    0             @goto18815
+0     16   0    0             @const2341
+0     12   0    0             @const2342
+0     16   0    0             @const2343
+0     14   0    0             @const2344
+0     16   0    0             @const2345
+0     10   0    0             @const2346
+0      8   0    0             @const2347
+0     14   0    0             @const2348
+0     10   0    0             @const2349
+0      8   0    0             @const2350
+0     10   0    0             @const2351
+0     10   0    0             @const2352
+1     40   0    0             @goto18882
+0     16   0    0             @const2354
+0     12   0    0             @const2355
+0     16   0    0             @const2356
+0     14   0    0             @const2357
+0     16   0    0             @const2358
+0     10   0    0             @const2359
+0      8   0    0             @const2360
+0     14   0    0             @const2361
+0     10   0    0             @const2362
+0      8   0    0             @const2363
+0     10   0    0             @const2364
+0     10   0    0             @const2365
+1     40   0    0             @goto18949
+0     16   0    0             @const2367
+0     12   0    0             @const2368
+0     16   0    0             @const2369
+0     14   0    0             @const2370
+0     16   0    0             @const2371
+0     10   0    0             @const2372
+0      8   0    0             @const2373
+0     14   0    0             @const2374
+0     10   0    0             @const2375
+0      8   0    0             @const2376
+0     10   0    0             @const2377
+0     10   0    0             @const2378
+1     40   0    0             @goto19016
+0     16   0    0             @const2380
+0     12   0    0             @const2381
+0     16   0    0             @const2382
+0     14   0    0             @const2383
+0     16   0    0             @const2384
+0     10   0    0             @const2385
+0      8   0    0             @const2386
+0     14   0    0             @const2387
+0     10   0    0             @const2388
+0      8   0    0             @const2389
+0     10   0    0             @const2390
+0     10   0    0             @const2391
+1     40   0    0             @goto19083
+0     16   0    0             @const2393
+0     12   0    0             @const2394
+0     16   0    0             @const2395
+0     14   0    0             @const2396
+0     16   0    0             @const2397
+0     10   0    0             @const2398
+0      8   0    0             @const2399
+0     14   0    0             @const2400
+0     10   0    0             @const2401
+0      8   0    0             @const2402
+0     10   0    0             @const2403
+0     10   0    0             @const2404
+1     40   0    0             @goto19150
+0     16   0    0             @const2406
+0     12   0    0             @const2407
+0     16   0    0             @const2408
+0     14   0    0             @const2409
+0     16   0    0             @const2410
+0     10   0    0             @const2411
+0      8   0    0             @const2412
+0     14   0    0             @const2413
+0     10   0    0             @const2414
+0      8   0    0             @const2415
+0     10   0    0             @const2416
+0     10   0    0             @const2417
+1     40   0    0             @goto19217
+0     16   0    0             @const2419
+0     12   0    0             @const2420
+0     16   0    0             @const2421
+0     14   0    0             @const2422
+0     16   0    0             @const2423
+0     10   0    0             @const2424
+0      8   0    0             @const2425
+0     14   0    0             @const2426
+0     10   0    0             @const2427
+0      8   0    0             @const2428
+0     10   0    0             @const2429
+0     10   0    0             @const2430
+1     40   0    0             @goto19284
+0     16   0    0             @const2432
+0     12   0    0             @const2433
+0     16   0    0             @const2434
+0     14   0    0             @const2435
+0     12   0    0             @const2436
+0    128   0    2             @PRINTF_U_1318
+0     12   0    0             @const2441
+0     12   0    0             @const2443
+0     12   0    0             @const2445
+0     10   0    0             @const2448
+0     10   0    0             @const2450
+0     10   0    0             @const2452
+0     10   0    0             @const2454
+0     10   0    0             @const2456
+0     14   0    0             @const2457
+0     26   0    0             @const2458
+0     14   0    0             @const2459
+0     26   0    0             @const2460
+0     14   0    0             @const2461
+0     26   0    0             @const2462
+0     14   0    0             @const2463
+0     26   0    0             @const2464
+0     14   0    0             @const2465
+0     26   0    0             @const2466
+0     12   0    0             @const2467
+0     14   0    0             @const2468
+0     12   0    0             @const2469
+0     14   0    0   6551 12.8  @const2470
+0     14   0    0   6551 12.8  @const2471
+1   3688   4    3   6551 12.8  TIMER1_isr
+1     16   0    0             @const2473
+0     72   0    2             @PRINTF_X_700
+1     20   0    0             @const2477
+1     52   0    0             @const2478
+1     18   0    0             @const2479
+1     50   0    0             @const2480
+1     20   0    0             @const2481
+1     52   0    0             @const2482
+1     16   0    0   6551 12.8  @const2483
+1     48   0    0     92  2.8  @const2484
+1     40   0    0     92  2.8  @goto19656
+0     32   0    3     92  2.8  RDA_485
+1    750   1    0    426  3.3  MAIN
+ Inline         0             @cinit1
+
+Program metrics:
+    Functions               66
+    Statements              7585
+    Comments                2037
+    Volume (V)              2128258
+    Difficulty (D)          386.7
+    Effort to implement (E) 823099548
+    Time to implement (T)   12702 hours, 9 minutes
+    Est Delivered Bugs (B)  293
+    Cyclomatic Complexity   9358
+    Maintainability (MI)    44
+
+ Segment     Used  Free
+-----------  ----  ----
+00000-00002     4  0  
+00004-00006     0  4  
+00008-000C8   194  0  
+000CA-0FFFE  65326  8  
+10000-1FFFE  49508  16028  
+
+
+

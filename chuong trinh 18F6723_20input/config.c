@@ -1,0 +1,1080 @@
+unsigned int16 crc16_modbus(unsigned int8 * data,unsigned int8 len)
+{
+unsigned int8 c,i=0,flag;
+unsigned int16 crc16=0xffff;
+while(i<len)
+    {
+    crc16= (crc16^data[i]);
+        for(c=0;c<8;c++)
+        {
+            flag=(crc16 & 0x01);
+            crc16= (crc16 >> 1);
+            if (flag !=0) {
+                crc16=(crc16 ^ 0xa001);
+            }
+        }
+    i++;
+    }
+    crc16= ((crc16 >> 8) | (crc16 << 8));
+return  crc16;    
+}
+void send_metter(unsigned int8 addr,unsigned int8 type)
+{
+unsigned int8 i=0;
+data_metter[0]=addr;
+switch(type)
+{
+case 0://simeas_p
+data_metter[1]=0x03;
+data_metter[2]=0x00;
+data_metter[3]=0xc8;
+data_metter[4]=0x00;
+data_metter[5]=0x5b;
+
+break;
+case 1://EMA
+data_metter[1]=0x03;
+//!data_metter[2]=0x10;
+//!data_metter[3]=0x00;
+//!data_metter[4]=0x00;
+//!data_metter[5]=0x4c;
+data_metter[2]=0x20;
+data_metter[3]=0x00; 
+data_metter[4]=0x00;
+data_metter[5]=0x3e;
+//data_metter[5]=0x45;
+break;
+case 2://RISH3440
+data_metter[1]=0x04;
+data_metter[2]=0x00;
+data_metter[3]=0x00;
+data_metter[4]=0x00;
+data_metter[5]=0x28;
+break;
+case 3://PECA3000
+data_metter[1]=0x03;
+//!data_metter[2]=0x00;
+//!data_metter[3]=0x00;
+//!data_metter[4]=0x00;
+//!data_metter[5]=0x50;
+data_metter[2]=0x03;
+data_metter[3]=0xe7;
+data_metter[4]=0x00;
+data_metter[5]=0x66;
+break;
+}
+crc16=crc16_modbus(data_metter,6);
+crc_high=(crc16 & 0x00ff);
+crc_low=((crc16>>8) & 0xff);
+//fprintf(DEBUG,"\n\rTX\n\r");   
+for(i=0;i<6;i++)
+   {
+   fputc(data_metter[i],rs485);
+   //fprintf(DEBUG," %x",data_metter[i]); 
+   }
+fputc(crc_low,rs485);
+fputc(crc_high,rs485);
+count=0;
+//!fprintf(DEBUG," %x",crc_low); 
+//!fprintf(DEBUG," %x",crc_high); 
+}
+//----------------------------------------read config from erom--------------------------------------
+void rtu_init()
+{
+unsigned int8 value;
+//-------------------------metter1
+value=read_eeprom(0);
+    if(value > 1)
+      {write_eeprom(0,0);
+      metter[1].action=0;
+      }
+    else
+      metter[1].action=value;
+value=read_eeprom(1); 
+   
+   if(value >5)
+   {
+   write_eeprom(1,0);
+   metter[1].type=0;
+   }
+   else
+   metter[1].type=value;
+metter[1].current=read_eeprom(32)+read_eeprom(33)*256;
+if(metter[1].current > 3000)
+   {
+   write_eeprom(32,255);
+   write_eeprom(33,0);
+   metter[1].current=255;
+   }
+metter[1].vol = read_eeprom(90)+read_eeprom(91)*256;
+if(metter[1].vol>800)
+   {
+   write_eeprom(90,230);
+   write_eeprom(91,0);
+   metter[1].vol=230;
+   }
+//-------------------------metter2
+value=read_eeprom(2);
+    if(value > 1)
+      {write_eeprom(2,0);
+      metter[2].action=0;
+      }
+    else
+      metter[2].action=value;
+value=read_eeprom(3); 
+   if(value >5)
+   {
+   write_eeprom(3,0);
+   metter[2].type=0;
+   }
+   else
+   metter[2].type=value;
+metter[2].current=read_eeprom(34)+read_eeprom(35)*256;
+if(metter[2].current > 3000)
+   {
+   write_eeprom(34,255);
+   write_eeprom(35,0);
+   metter[2].current=255;
+   }
+metter[2].vol = read_eeprom(92)+read_eeprom(93)*256;
+if(metter[2].vol>800)
+   {
+   write_eeprom(92,230);
+   write_eeprom(93,0);
+   metter[2].vol=230;
+   }   
+//-------------------------metter3
+value=read_eeprom(4);
+    if(value > 1)
+      {write_eeprom(4,0);
+      metter[3].action=0;
+      }
+    else
+      metter[3].action=value;
+value=read_eeprom(5); 
+   if(value >5)
+   {
+   write_eeprom(5,0);
+   metter[3].type=0;
+   }
+   else
+   metter[3].type=value;
+metter[3].current=read_eeprom(36)+read_eeprom(37)*256;
+if(metter[3].current > 3000)
+   {
+   write_eeprom(36,255);
+   write_eeprom(37,0);
+   metter[3].current=255;
+   } 
+metter[3].vol = read_eeprom(94)+read_eeprom(95)*256;
+if(metter[3].vol>800)
+   {
+   write_eeprom(94,230);
+   write_eeprom(95,0);
+   metter[3].vol=230;
+   }   
+//-------------------------metter4   
+value=read_eeprom(6);
+    if(value > 1)
+      {write_eeprom(6,0);
+      metter[4].action=0;
+      }
+    else
+      metter[4].action=value;
+value=read_eeprom(7); 
+   if(value >5)
+   {
+   write_eeprom(7,0);
+   metter[4].type=0;
+   }
+   else
+   metter[4].type=value;
+metter[4].current=read_eeprom(38)+read_eeprom(39)*256;
+if(metter[4].current > 3000)
+   {
+   write_eeprom(38,255);
+   write_eeprom(39,0);
+   metter[4].current=255;
+   } 
+metter[4].vol = read_eeprom(96)+read_eeprom(97)*256;
+if(metter[4].vol>800)
+   {
+   write_eeprom(96,230);
+   write_eeprom(97,0);
+   metter[4].vol=230;
+   }      
+//-------------------------metter5
+value=read_eeprom(8);
+    if(value > 1)
+      {write_eeprom(8,0);
+      metter[5].action=0;
+      }
+    else
+      metter[5].action=value;
+value=read_eeprom(9); 
+   if(value >5)
+   {
+   write_eeprom(9,0);
+   metter[5].type=0;
+   }
+   else
+   metter[5].type=value;
+metter[5].current=read_eeprom(40)+read_eeprom(41)*256;
+if(metter[5].current > 3000)
+   {
+   write_eeprom(40,255);
+   write_eeprom(41,0);
+   metter[5].current=255;
+   }
+metter[5].vol = read_eeprom(98)+read_eeprom(99)*256;
+if(metter[5].vol>800)
+   {
+   write_eeprom(98,230);
+   write_eeprom(99,0);
+   metter[5].vol=230;
+   }         
+//-------------------------metter6
+value=read_eeprom(10);
+    if(value > 1)
+      {write_eeprom(10,0);
+      metter[6].action=0;
+      }
+    else
+      metter[6].action=value;
+value=read_eeprom(11); 
+   if(value >5)
+   {
+   write_eeprom(11,0);
+   metter[6].type=0;
+   }
+   else
+   metter[6].type=value;
+metter[6].current=read_eeprom(42)+read_eeprom(43)*256;
+if(metter[6].current > 3000)
+   {
+   write_eeprom(42,255);
+   write_eeprom(43,0);
+   metter[6].current=255;
+   }
+metter[6].vol = read_eeprom(100)+read_eeprom(101)*256;
+if(metter[6].vol>800)
+   {
+   write_eeprom(100,230);
+   write_eeprom(101,0);
+   metter[6].vol=230;
+   }            
+//-------------------------metter7   
+value=read_eeprom(12);
+    if(value > 1)
+      {write_eeprom(12,0);
+      metter[7].action=0;
+      }
+    else
+      metter[7].action=value;
+value=read_eeprom(13); 
+   if(value >5)
+   {
+   write_eeprom(13,0);
+   metter[7].type=0;
+   }
+   else
+   metter[7].type=value;
+metter[7].current=read_eeprom(44)+read_eeprom(45)*256;
+if(metter[7].current > 3000)
+   {
+   write_eeprom(44,255);
+   write_eeprom(45,0);
+   metter[7].current=255;
+   } 
+metter[7].vol = read_eeprom(102)+read_eeprom(103)*256;
+if(metter[7].vol>800)
+   {
+   write_eeprom(102,230);
+   write_eeprom(103,0);
+   metter[7].vol=230;
+   }               
+//-------------------------metter8    
+value=read_eeprom(14);
+    if(value > 1)
+      {write_eeprom(14,0);
+      metter[8].action=0;
+      }
+    else
+      metter[8].action=value;
+value=read_eeprom(15); 
+   if(value >5)
+   {
+   write_eeprom(15,0);
+   metter[8].type=0;
+   }
+   else
+   metter[8].type=value;
+metter[8].current=read_eeprom(46)+read_eeprom(47)*256;
+if(metter[8].current > 3000)
+   {
+   write_eeprom(46,255);
+   write_eeprom(47,0);
+   metter[8].current=255;
+   }
+metter[8].vol = read_eeprom(104)+read_eeprom(105)*256;
+if(metter[8].vol>800)
+   {
+   write_eeprom(104,230);
+   write_eeprom(105,0);
+   metter[8].vol=230;
+   }                  
+//-------------------------metter9
+value=read_eeprom(16);
+    if(value > 1)
+      {write_eeprom(16,0);
+      metter[9].action=0;
+      }
+    else
+      metter[9].action=value;
+value=read_eeprom(17); 
+   
+   if(value >5)
+   {
+   write_eeprom(17,0);
+   metter[9].type=0;
+   }
+   else
+   metter[9].type=value;
+metter[9].current=read_eeprom(48)+read_eeprom(49)*256;
+if(metter[9].current >3000)
+   {
+   write_eeprom(48,255);
+   write_eeprom(49,0);
+   metter[9].current=255;
+   }
+metter[9].vol = read_eeprom(106)+read_eeprom(107)*256;
+if(metter[9].vol>800)
+   {
+   write_eeprom(106,230);
+   write_eeprom(107,0);
+   metter[9].vol=230;
+   }                     
+//-------------------------metter10
+value=read_eeprom(18);
+    if(value > 1)
+      {write_eeprom(18,0);
+      metter[10].action=0;
+      }
+    else
+      metter[10].action=value;
+value=read_eeprom(19); 
+   if(value >5)
+   {
+   write_eeprom(19,0);
+   metter[10].type=0;
+   }
+   else
+   metter[10].type=value;
+metter[10].current=read_eeprom(50)+read_eeprom(51)*256;
+if(metter[10].current > 3000)
+   {
+   write_eeprom(50,255);
+   write_eeprom(51,0);
+   metter[10].current=255;
+   } 
+metter[10].vol = read_eeprom(108)+read_eeprom(109)*256;
+if(metter[10].vol>800)
+   {
+   write_eeprom(108,230);
+   write_eeprom(109,0);
+   metter[10].vol=230;
+   }                  
+//-------------------------metter11
+value=read_eeprom(20);
+    if(value > 1)
+      {write_eeprom(20,0);
+      metter[11].action=0;
+      }
+    else
+      metter[11].action=value;
+value=read_eeprom(21); 
+   if(value >5)
+   {
+   write_eeprom(21,0);
+   metter[11].type=0;
+   }
+   else
+   metter[11].type=value;
+metter[11].current=read_eeprom(52)+read_eeprom(53)*256;
+if(metter[11].current > 3000)
+   {
+   write_eeprom(52,255);
+   write_eeprom(53,0);
+   metter[11].current=255;
+   } 
+metter[11].vol = read_eeprom(110)+read_eeprom(111)*256;
+if(metter[11].vol>800)
+   {
+   write_eeprom(110,230);
+   write_eeprom(111,0);
+   metter[11].vol=230;
+   }                     
+//-------------------------metter12   
+value=read_eeprom(22);
+    if(value > 1)
+      {write_eeprom(22,0);
+      metter[12].action=0;
+      }
+    else
+      metter[12].action=value;
+value=read_eeprom(23); 
+   if(value >5)
+   {
+   write_eeprom(23,0);
+   metter[12].type=0;
+   }
+   else
+   metter[12].type=value;
+metter[12].current=read_eeprom(54)+read_eeprom(55)*256;
+if(metter[12].current > 1000)
+   {
+   write_eeprom(54,255);
+   write_eeprom(55,0);
+   metter[12].current=255;
+   }  
+metter[12].vol = read_eeprom(112)+read_eeprom(113)*256;
+if(metter[12].vol>800)
+   {
+   write_eeprom(112,230);
+   write_eeprom(113,0);
+   metter[12].vol=230;
+   }    
+//-------------------------metter13
+value=read_eeprom(24);
+    if(value > 1)
+      {write_eeprom(24,0);
+      metter[13].action=0;
+      }
+    else
+      metter[13].action=value;
+value=read_eeprom(25); 
+   if(value >5)
+   {
+   write_eeprom(25,0);
+   metter[13].type=0;
+   }
+   else
+   metter[13].type=value;
+metter[13].current=read_eeprom(56)+read_eeprom(57)*256;
+if(metter[13].current > 3000)
+   {
+   write_eeprom(56,255);
+   write_eeprom(57,0);
+   metter[13].current=255;
+   }   
+metter[13].vol = read_eeprom(114)+read_eeprom(115)*256;
+if(metter[13].vol>800)
+   {
+   write_eeprom(114,230);
+   write_eeprom(115,0);
+   metter[13].vol=230;
+   }       
+//-------------------------metter14
+value=read_eeprom(26);
+    if(value > 1)
+      {write_eeprom(26,0);
+      metter[14].action=0;
+      }
+    else
+      metter[14].action=value;
+value=read_eeprom(27); 
+   if(value >5)
+   {
+   write_eeprom(27,0);
+   metter[14].type=0;
+   }
+   else
+   metter[14].type=value;
+metter[14].current=read_eeprom(58)+read_eeprom(59)*256;
+if(metter[14].current > 3000)
+   {
+   write_eeprom(58,255);
+   write_eeprom(59,0);
+   metter[14].current=255;
+   }
+metter[14].vol = read_eeprom(116)+read_eeprom(117)*256;
+if(metter[14].vol>800)
+   {
+   write_eeprom(116,230);
+   write_eeprom(117,0);
+   metter[14].vol=230;
+   }          
+//-------------------------metter15   
+value=read_eeprom(28);
+    if(value > 1)
+      {write_eeprom(28,0);
+      metter[15].action=0;
+      }
+    else
+      metter[15].action=value;
+value=read_eeprom(29); 
+   if(value >5)
+   {
+   write_eeprom(29,0);
+   metter[15].type=0;
+   }
+   else
+   metter[15].type=value;
+metter[15].current=read_eeprom(60)+read_eeprom(61)*256;
+if(metter[15].current > 3000)
+   {
+   write_eeprom(60,255);
+   write_eeprom(61,0);
+   metter[15].current=255;
+   }   
+metter[15].vol = read_eeprom(118)+read_eeprom(119)*256;
+if(metter[15].vol>800)
+   {
+   write_eeprom(118,230);
+   write_eeprom(119,0);
+   metter[15].vol=230;
+   }             
+//-------------------------metter16    
+value=read_eeprom(30);
+    if(value > 1)
+      {write_eeprom(30,0);
+      metter[16].action=0;
+      }
+    else
+      metter[16].action=value;
+value=read_eeprom(31); 
+   if(value >5)
+   {
+   write_eeprom(31,0);
+   metter[16].type=0;
+   }
+   else
+   metter[16].type=value; 
+metter[16].current=read_eeprom(62)+read_eeprom(63)*256;
+if(metter[16].current >3000)
+   {
+   write_eeprom(62,255);
+   write_eeprom(63,0);
+   metter[16].current=255;
+   }
+metter[16].vol = read_eeprom(120)+read_eeprom(121)*256;
+if(metter[16].vol>800)
+   {
+   write_eeprom(120,230);
+   write_eeprom(121,0);
+   metter[16].vol=230;
+   }                
+//-------------------------metter17
+value=read_eeprom(74);
+    if(value > 1)
+      {write_eeprom(74,0);
+      metter[17].action=0;
+      }
+    else
+      metter[17].action=value;
+value=read_eeprom(75); 
+   
+   if(value >5)
+   {
+   write_eeprom(75,0);
+   metter[17].type=0;
+   }
+   else
+   metter[17].type=value;
+metter[17].current=read_eeprom(76)+read_eeprom(77)*256;
+if(metter[17].current > 3000)
+   {
+   write_eeprom(76,255);
+   write_eeprom(77,0);
+   metter[17].current=255;
+   }
+metter[17].vol = read_eeprom(122)+read_eeprom(123)*256;
+if(metter[17].vol>800)
+   {
+   write_eeprom(122,230);
+   write_eeprom(123,0);
+   metter[17].vol=230;
+   }          
+//-------------------------metter18
+value=read_eeprom(78);
+    if(value > 1)
+      {write_eeprom(78,0);
+      metter[18].action=0;
+      }
+    else
+      metter[18].action=value;
+value=read_eeprom(79); 
+   
+   if(value >5)
+   {
+   write_eeprom(79,0);
+   metter[18].type=0;
+   }
+   else
+   metter[18].type=value;
+metter[18].current=read_eeprom(80)+read_eeprom(81)*256;
+if(metter[18].current > 3000)
+   {
+   write_eeprom(80,255);
+   write_eeprom(81,0);
+   metter[18].current=255;
+   }
+metter[18].vol = read_eeprom(124)+read_eeprom(125)*256;
+if(metter[18].vol>800)
+   {
+   write_eeprom(124,230);
+   write_eeprom(125,0);
+   metter[18].vol=230;
+   }             
+//-------------------------metter19
+value=read_eeprom(82);
+    if(value > 1)
+      {write_eeprom(82,0);
+      metter[19].action=0;
+      }
+    else
+      metter[19].action=value;
+value=read_eeprom(83); 
+   
+   if(value >5)
+   {
+   write_eeprom(83,0);
+   metter[19].type=0;
+   }
+   else
+   metter[19].type=value;
+metter[19].current=read_eeprom(84)+read_eeprom(85)*256;
+if(metter[19].current > 3000)
+   {
+   write_eeprom(84,255);
+   write_eeprom(85,0);
+   metter[19].current=255;
+   }
+metter[19].vol = read_eeprom(126)+read_eeprom(127)*256;
+if(metter[19].vol>800)
+   {
+   write_eeprom(126,230);
+   write_eeprom(127,0);
+   metter[19].vol=230;
+   }     
+//-------------------------metter20
+value=read_eeprom(86);
+    if(value > 1)
+      {write_eeprom(86,0);
+      metter[20].action=0;
+      }
+    else
+      metter[20].action=value;
+value=read_eeprom(87); 
+   
+   if(value >5)
+   {
+   write_eeprom(87,0);
+   metter[20].type=0;
+   }
+   else
+   metter[20].type=value;
+metter[20].current=read_eeprom(88)+read_eeprom(89)*256;
+if(metter[20].current > 3000)
+   {
+   write_eeprom(88,255);
+   write_eeprom(89,0);
+   metter[19].current=255;
+   } 
+metter[20].vol = read_eeprom(128)+read_eeprom(129)*256;
+if(metter[20].vol>800)
+   {
+   write_eeprom(128,230);
+   write_eeprom(129,0);
+   metter[20].vol=230;
+   }
+//-------------------------metter21
+value=read_eeprom(130);
+    if(value > 1)
+      {write_eeprom(130,0);
+      metter[21].action=0;
+      }
+    else
+      metter[21].action=value;
+value=read_eeprom(131); 
+   
+   if(value >5)
+   {
+   write_eeprom(131,0);
+   metter[21].type=0;
+   }
+   else
+   metter[21].type=value;
+metter[21].current=read_eeprom(132)+read_eeprom(133)*256;
+if(metter[21].current > 3000)
+   {
+   write_eeprom(132,255);
+   write_eeprom(133,0);
+   metter[21].current=255;
+   } 
+metter[21].vol = read_eeprom(134)+read_eeprom(135)*256;
+if(metter[21].vol>800)
+   {
+   write_eeprom(134,230);
+   write_eeprom(135,0);
+   metter[21].vol=230;
+   }  
+//-------------------------metter22
+value=read_eeprom(136);
+    if(value > 1)
+      {write_eeprom(136,0);
+      metter[22].action=0;
+      }
+    else
+      metter[22].action=value;
+value=read_eeprom(137); 
+   
+   if(value >5)
+   {
+   write_eeprom(137,0);
+   metter[22].type=0;
+   }
+   else
+   metter[22].type=value;
+metter[22].current=read_eeprom(138)+read_eeprom(139)*256;
+if(metter[22].current > 3000)
+   {
+   write_eeprom(138,255);
+   write_eeprom(139,0);
+   metter[22].current=255;
+   } 
+metter[22].vol = read_eeprom(140)+read_eeprom(141)*256;
+if(metter[22].vol>800)
+   {
+   write_eeprom(140,230);
+   write_eeprom(141,0);
+   metter[22].vol=230;
+   }  
+//-------------------------metter23
+value=read_eeprom(142);
+    if(value > 1)
+      {write_eeprom(142,0);
+      metter[23].action=0;
+      }
+    else
+      metter[23].action=value;
+value=read_eeprom(143); 
+   
+   if(value >5)
+   {
+   write_eeprom(143,0);
+   metter[23].type=0;
+   }
+   else
+   metter[23].type=value;
+metter[23].current=read_eeprom(144)+read_eeprom(145)*256;
+if(metter[23].current > 3000)
+   {
+   write_eeprom(144,255);
+   write_eeprom(145,0);
+   metter[23].current=255;
+   } 
+metter[23].vol = read_eeprom(146)+read_eeprom(147)*256;
+if(metter[23].vol>800)
+   {
+   write_eeprom(146,230);
+   write_eeprom(147,0);
+   metter[23].vol=230;
+   }    
+//-------------------------metter24
+value=read_eeprom(148);
+    if(value > 1)
+      {write_eeprom(148,0);
+      metter[24].action=0;
+      }
+    else
+      metter[24].action=value;
+value=read_eeprom(149); 
+   
+   if(value >5)
+   {
+   write_eeprom(149,0);
+   metter[24].type=0;
+   }
+   else
+   metter[24].type=value;
+metter[24].current=read_eeprom(150)+read_eeprom(151)*256;
+if(metter[24].current > 3000)
+   {
+   write_eeprom(150,255);
+   write_eeprom(151,0);
+   metter[24].current=255;
+   } 
+metter[24].vol = read_eeprom(152)+read_eeprom(153)*256;
+if(metter[24].vol>800)
+   {
+   write_eeprom(152,230);
+   write_eeprom(153,0);
+   metter[24].vol=230; 
+   }  
+//-------------------------metter25
+value=read_eeprom(154);
+    if(value > 1)
+      {write_eeprom(154,0);
+      metter[25].action=0;
+      }
+    else
+      metter[25].action=value;
+value=read_eeprom(155); 
+   
+   if(value >5)
+   {
+   write_eeprom(155,0);
+   metter[25].type=0;
+   }
+   else
+   metter[25].type=value;
+metter[25].current=read_eeprom(156)+read_eeprom(157)*256;
+if(metter[25].current > 3000)
+   {
+   write_eeprom(156,255);
+   write_eeprom(157,0);
+   metter[25].current=255;
+   } 
+metter[25].vol = read_eeprom(158)+read_eeprom(159)*256;
+if(metter[25].vol>800)
+   {
+   write_eeprom(158,230);
+   write_eeprom(159,0);
+   metter[25].vol=230; 
+   }
+//-------------------------metter26
+value=read_eeprom(160);
+    if(value > 1)
+      {write_eeprom(160,0);
+      metter[26].action=0;
+      }
+    else
+      metter[26].action=value;
+value=read_eeprom(161); 
+   
+   if(value >5)
+   {
+   write_eeprom(161,0);
+   metter[26].type=0;
+   }
+   else
+   metter[26].type=value;
+metter[26].current=read_eeprom(162)+read_eeprom(163)*256;
+if(metter[26].current > 3000)
+   {
+   write_eeprom(162,255);
+   write_eeprom(163,0);
+   metter[26].current=255;
+   } 
+metter[26].vol = read_eeprom(164)+read_eeprom(165)*256;
+if(metter[26].vol>800)
+   {
+   write_eeprom(164,230);
+   write_eeprom(165,0);
+   metter[26].vol=230; 
+   }                        
+//-----------------------   
+port=read_eeprom(72)+read_eeprom(73)*256;
+   if(port==0xffff)
+   {
+   port=1000;
+   write_eeprom(72,port&0x00ff);
+   write_eeprom(73,(port>>8)&0x00ff);
+   }   
+lo[1]=274;
+lo[2]=273; 
+lo[3]=200; 
+lo[4]=232; 
+lo[5]=272; 
+lo[6]=112; 
+lo[7]=231; 
+lo[8]=271; 
+lo[9]=102; 
+lo[10]=434; 
+lo[11]=334; 
+lo[12]=134; 
+lo[13]=182; 
+lo[14]=101; 
+lo[15]=100; 
+lo[16]=235; 
+lo[17]=132; 
+lo[18]=131; 
+lo[19]=135;
+lo[20]=0; 
+//
+//!lo[1]=373;
+//!lo[2]=372; 
+//!lo[3]=374; 
+//!lo[4]=333; 
+//!lo[5]=433; 
+//!lo[6]=133; 
+//!lo[7]=175; 
+//!lo[8]=177; 
+//!lo[9]=178; 
+//!lo[10]=173; 
+//!lo[11]=174; 
+//!lo[12]=171; 
+//!lo[13]=172; 
+//!lo[14]=180; 
+//!lo[15]=181; 
+//!lo[16]=176; 
+//!lo[17]=312; 
+//!lo[18]=0; 
+//!lo[19]=0;
+//!lo[20]=0; 
+for(i=0;i<21;i++)
+{
+alarm[i]=0;
+}
+ready=0;
+out_alarm=0;
+}
+void send_ip()
+{
+fputc('@',ethernet);
+fputc('s',ethernet);
+fputc('e',ethernet);
+fputc('t',ethernet);
+fputc('i',ethernet);
+fputc('p',ethernet);
+fputc( read_eeprom(64),ethernet);
+fputc( read_eeprom(65),ethernet);
+fputc( read_eeprom(66),ethernet);
+fputc( read_eeprom(67),ethernet);
+fputc( read_eeprom(68),ethernet);
+fputc( read_eeprom(69),ethernet);
+fputc( read_eeprom(70),ethernet);
+fputc( read_eeprom(71),ethernet);
+fputc('#',ethernet);
+}
+void output_alarm(unsigned int16 out)
+{
+unsigned int8 ror,x;
+x= out & 0x00ff;
+for(ror=0;ror<8;ror++)
+   {
+   rotate_left( &x, 1);
+   output_bit(SDI,(x) & (0x01));
+   output_low(SFT);
+   delay_us(10);
+   output_high(SFT);
+   }
+x= (out>>8) & 0x00ff;   
+for(ror=0;ror<8;ror++)
+   {
+   rotate_left( &x, 1);
+   output_bit(SDI,(x) & (0x01));
+   output_low(SFT);
+   delay_us(10);
+   output_high(SFT);
+   }   
+output_low(LCH);
+delay_ms(1);
+output_high(LCH);
+delay_ms(1);
+}
+void set_alarm_metter(unsigned int8 add, unsigned int1 value,unsigned int16 output)
+{
+   switch (add)
+   {
+   case 9:
+      if(value==1)
+         bit_set(output,0);
+      else
+         bit_clear(output,0);
+   break;
+   case 10:
+      if(value==1)
+         bit_set(output,1);
+      else
+         bit_clear(output,1);
+   break;
+   case 11:
+      if(value==1)
+         bit_set(output,2);
+      else
+         bit_clear(output,2);
+   break;
+   case 12:
+      if(value==1)
+         bit_set(output,3);
+      else
+         bit_clear(output,3);
+   break;
+   case 13:
+      if(value==1)
+         bit_set(output,4);
+      else
+         bit_clear(output,4);
+   break;
+   case 14:
+      if(value==1)
+         bit_set(output,5);
+      else
+         bit_clear(output,5);
+   break;
+   case 15:
+      if(value==1)
+         bit_set(output,6);
+      else
+         bit_clear(output,6);
+   break;
+   case 16:
+      if(value==1)
+         bit_set(output,7);
+      else
+         bit_clear(output,7);
+   break;
+   case 1:
+      if(value==1)
+         bit_set(output,8);
+      else
+         bit_clear(output,8);
+   break;
+   case 2:
+      if(value==1)
+         bit_set(output,9);
+      else
+         bit_clear(output,9);
+   break;
+   case 3:
+      if(value==1)
+         bit_set(output,10);
+      else
+         bit_clear(output,10);
+   break;
+   case 4:
+      if(value==1)
+         bit_set(output,11);
+      else
+         bit_clear(output,11);
+   break;
+   case 5:
+      if(value==1)
+         bit_set(output,12);
+      else
+         bit_clear(output,12);
+   break;
+   case 6:
+      if(value==1)
+         bit_set(output,13);
+      else
+         bit_clear(output,13);
+   break;
+   case 7:
+      if(value==1)
+         bit_set(output,14);
+      else
+         bit_clear(output,14);
+   break;
+   case 8:
+      if(value==1)
+         bit_set(output,15);
+      else
+         bit_clear(output,15);
+   break;
+   }
+}
+//220kv 274 273 232 272 231 271 102 434 334 134 182 101 235 200 112 100
+//110kv 373 372 371 133 333 412 175 177 178 173 174 171 172 180 181 176

@@ -1,0 +1,21 @@
+#include <18F6723.h>
+#device adc=16
+#FUSES WDT                    //No Watch Dog Timer
+//#FUSES WDT128                   //Watch Dog Timer uses 1:128 Postscale
+#FUSES HS                      //High speed Osc, high power 16MHz-25MHz
+#FUSES NOXINST                  //Extended set extension and Indexed Addressing mode disabled (Legacy mode)
+#FUSES NOLVP  
+#FUSES PROTECT,PUT, NOIESO, NOFCMEN 
+#use delay(clock=20000000)
+#use rs232(baud=38400,parity=N,xmit=PIN_B7,rcv=PIN_B6,bits=8,FORCE_SW,stream=DEBUG)
+#use rs232(baud=9600,UART1,parity=N,xmit=PIN_C6,rcv=PIN_C7,bits=8,stream=ethernet,errors)
+#use rs232(baud=9600,UART2,parity=N,xmit=PIN_G1,rcv=PIN_G2,bits=8,stream=rs485,ENABLE=PIN_E1,errors)
+#use i2c(Master,sda=PIN_C4,scl=PIN_C3)
+#define  BUZZ_ON   output_high(PIN_C5)
+#define  BUZZ_OFF  output_low(PIN_C5)
+#define  ALARM_ON   output_low(PIN_C0)
+#define  ALARM_OFF  output_high(PIN_C0)
+#DEFINE SDI PIN_D7
+#DEFINE SFT PIN_D5
+#DEFINE LCH PIN_D6
+#include <math.h>

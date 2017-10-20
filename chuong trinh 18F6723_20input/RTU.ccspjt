@@ -1,0 +1,112 @@
+[PROJECT]
+Target=RTU.hex
+Development_Mode=
+Processor_Text=PIC18F6723
+ToolSuite=CCS
+Processor=0x6723
+CCSVerions=5.046
+Compiler=PCH
+CCSVersion=5.046
+[F:\Dropbox\Working\tram 220kv\RTU\chuongtrinh\RTU]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+[mru-list]
+1=RTU.c
+[Windows]
+0=0000 %S 0 0 796 451 3 0
+[Opened Files]
+1=RTU.c
+2=lcd_4bit.c
+3=key_lcd.c
+4=write_sd.c
+5=config.c
+6=write_sd.c
+7=MMC_SPI_FAT32.h
+8=DS3231.h
+9=DS3231.c
+10=real_time_ds1307.c
+11=key_lcd.c
+12=
+t1=1
+t2=1
+t3=1
+t4=1
+t5=1
+t6=1
+t7=1
+t8=1
+t9=1
+t10=1
+t11=1
+Count=5
+[F:\Dropbox\Working\tram 220kv\RTU\chuong trinh 18F6723\RTU]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[ProjectLog]
+Days=2
+D1=15-05-2017
+D1_L=6
+D1_L1=[31763]Project Opened.
+D1_L2=[36651]Project Closed.
+D1_L3=[36651]Project Opened.
+D1_L4=[36684]Project Closed.
+D1_L5=[36757]Project Opened.
+D1_L6=[37078]Project Closed.
+D2=20-06-2017
+D2_L=29
+D2_L1=[28818]Project Opened.
+D2_L2=[28853]Project Closed.
+D2_L3=[28941]Project Opened.
+D2_L4=[28961]Project Closed.
+D2_L5=[29051]Project Opened.
+D2_L6=[29065]Started Editing.
+D2_L7=[29077]Stopped Editing.
+TotalEdit=7
+TotalDebug=0
+D2_E=7
+D2_D=0
+D2_L8=[29077]Project Closed.
+D2_L9=[29209]Project Opened.
+D2_L10=[29214]Started Editing.
+D2_L11=[29229]Stopped Editing.
+D2_L12=[29229]Project Closed.
+D2_L13=[29240]Project Opened.
+D2_L14=[29248]Started Editing.
+D2_L15=[29266]Stopped Editing.
+D2_L16=[29354]Project Closed.
+D2_L17=[29405]Started Editing.
+D2_L18=[29440]Stopped Editing.
+D2_L19=[29443]Project Closed.
+D2_L20=[29481]Project Opened.
+D2_L21=[29493]Started Editing.
+D2_L22=[29590]Stopped Editing.
+D2_L23=[29590]Project Closed.
+D2_L24=[29599]Project Opened.
+D2_L25=[29611]Started Editing.
+D2_L26=[29912]Stopped Editing.
+D2_L27=[35742]Project Closed.
+D2_L28=[35772]Project Opened.
+D2_L29=[35779]Project Closed.
+[Target Data]
+FileList=RTU.c
+[Directories]
+Include=
+[H:\Dropbox\Working\tram 220kv\RTU\chuong trinh 18F6723_20input\RTU]
+Type=4
+[RTU.c]
+Type=4
+
+[defines]
+buildcount=6
+[Units]
+Count=1
+1=RTU (main)
